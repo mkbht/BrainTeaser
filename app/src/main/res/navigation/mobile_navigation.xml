@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_explore"
-        android:name="com.zorganlabs.brainteaser.ui.dashboard.ExploreFragment"
+        android:name="com.zorganlabs.brainteaser.ui.explore.ExploreFragment"
         android:label="@string/explore"
         tools:layout="@layout/fragment_explore" />
 

@@ -66,10 +66,16 @@
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Forgot Password"
+                android:text="@string/forgot_password"
+                android:layout_gravity="end"
+                android:paddingVertical="8dp"
+                android:background="?android:selectableItemBackground"
+                android:focusable="true"
+                android:clickable="true"
                 android:id="@+id/resetPassword"/>
 
             <com.google.android.material.button.MaterialButton
