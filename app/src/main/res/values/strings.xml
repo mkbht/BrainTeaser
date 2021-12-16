@@ -13,4 +13,6 @@
     <string name="profile">Profile</string>
     <string name="full_name">Full name</string>
     <string name="logout">Logout</string>
+    <string name="explore">Explore</string>
+    <string name="quizzes">Quizzes</string>
 </resources>
