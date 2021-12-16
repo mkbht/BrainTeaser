@@ -50,19 +50,21 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="342dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="120dp"
         android:text="@string/start_quiz"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        tools:layout_editor_absoluteX="144dp" />
+        app:layout_constraintStart_toStartOf="@+id/text_home"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.108" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="48dp"
         android:layout_height="38dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="260dp"
         android:contentDescription="@string/player_badge"
         android:src="@drawable/medal"
         app:layout_constraintStart_toEndOf="@+id/homePageUserName"
@@ -71,14 +73,14 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="148dp"
-        android:layout_height="254dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="169dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="32dp"
         android:contentDescription="@string/player_profile_mascot"
         android:src="@drawable/leonardo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rewarPointsString"
@@ -91,27 +93,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homePageUserName" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="114dp"
-        android:layout_height="91dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:max="10000"
-        android:progress="3500"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rewarPointsString" />
-
     <TextView
         android:id="@+id/rewardValueHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
         android:text="@string/reward_points_value"
-        android:textSize="24sp"
+        android:textSize="60sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/rewarPointsString" />
 </androidx.constraintlayout.widget.ConstraintLayout>
