@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "475935608028",
+    "project_id": "brainteaser-71589",
+    "storage_bucket": "brainteaser-71589.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475935608028:android:e9b1f6bdf1515319db3819",
+        "android_client_info": {
+          "package_name": "com.zorganlabs.brainteaser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475935608028-ovvcj9jeq18t2vu6knu7k2b3qu31tour.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFRa2V294xKyf98A4zONwGCZdYjjp_5G0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475935608028-ovvcj9jeq18t2vu6knu7k2b3qu31tour.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
