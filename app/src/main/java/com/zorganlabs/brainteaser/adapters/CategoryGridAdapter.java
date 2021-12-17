@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.models.QuizCategory;
 
@@ -27,6 +29,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final List<QuizCategory> categories;
     private CategoryClickListener categoryClickListener;
     Context context;
+    public ImageView imageView;
 
     public CategoryGridAdapter(List<QuizCategory> list, CategoryClickListener listener) {
         super();
@@ -34,16 +37,18 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         categoryClickListener = listener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
         public CardView parentCardView;
         CategoryClickListener categoryClickListener;
+        public ImageView imageView;
 
         public ViewHolder(@NonNull View itemView, CategoryClickListener categoryClickListener) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            parentCardView = (CardView) itemView.findViewById(R.id.parentCardView);
+            title = itemView.findViewById(R.id.title);
+            parentCardView = itemView.findViewById(R.id.parentCardView);
+            imageView = itemView.findViewById(R.id.image);
             this.categoryClickListener = categoryClickListener;
             itemView.setOnClickListener(this);
         }
@@ -66,6 +71,9 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         QuizCategory quizCategory = categories.get(position);
         ((ViewHolder) holder).title.setText(quizCategory.getTitle());
+        Glide.with(((ViewHolder) holder).imageView.getContext())
+                .load(quizCategory.getImage())
+                .into(((ViewHolder) holder).imageView);
     }
 
     @Override

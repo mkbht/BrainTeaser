@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class ExploreFragment extends Fragment implements CategoryGridAdapter.CategoryClickListener {
 
-
     FragmentExploreBinding binding;
     RecyclerView categoryList;
     CategoryGridAdapter categoryGridAdapter;
