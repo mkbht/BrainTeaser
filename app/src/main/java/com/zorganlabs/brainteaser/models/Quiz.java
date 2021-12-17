@@ -1,6 +1,7 @@
 package com.zorganlabs.brainteaser.models;
 
 public class Quiz {
+    // member variables
     private String question;
     private String answer;
     private String option1;
@@ -8,6 +9,7 @@ public class Quiz {
     private String option3;
     private String option4;
 
+    // getters and setters
     public String getQuestion() {
         return question;
     }
@@ -56,10 +58,12 @@ public class Quiz {
         this.option4 = option4;
     }
 
+    // constructor
     public Quiz() {
 
     }
 
+    // parameterized constructor
     public Quiz(String question, String answer, String option1, String option2, String option3, String option4) {
         this.question = question;
         this.answer = answer;

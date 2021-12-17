@@ -1,10 +1,14 @@
 package com.zorganlabs.brainteaser.models;
 
 public class Leaderboard {
-    int id;
-    int correct;
-    int incorrect;
+    // member variables
+    private int id;
+    private int correct;
+    private int incorrect;
+    private int total;
+    private String category;
 
+    // getters and setters
     public int getTotal() {
         return total;
     }
@@ -12,9 +16,6 @@ public class Leaderboard {
     public void setTotal(int total) {
         this.total = total;
     }
-
-    int total;
-    String category;
 
     public int getId() {
         return id;
@@ -48,9 +49,11 @@ public class Leaderboard {
         this.category = category;
     }
 
+    // constructor
     public Leaderboard() {
     }
 
+    // parameterized constructor
     public Leaderboard(int correct, int incorrect, String category) {
         this.correct = correct;
         this.incorrect = incorrect;

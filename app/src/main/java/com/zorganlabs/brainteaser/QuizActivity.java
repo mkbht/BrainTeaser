@@ -7,14 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,12 +20,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.zorganlabs.brainteaser.models.Leaderboard;
 import com.zorganlabs.brainteaser.models.Quiz;
-import com.zorganlabs.brainteaser.models.QuizCategory;
 
 import java.util.ArrayList;
 
 public class QuizActivity extends AppCompatActivity {
-
     DatabaseReference quizRef;
     String categoryName;
     ArrayList<Quiz> quizList = new ArrayList<Quiz>();
@@ -53,10 +48,10 @@ public class QuizActivity extends AppCompatActivity {
     Button gotoHome;
     DatabaseHandler databaseHandler;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // attach layout to java file
         setContentView(R.layout.activity_quiz);
         getSupportActionBar().hide();
 
@@ -68,25 +63,13 @@ public class QuizActivity extends AppCompatActivity {
             categoryName = intent.getStringExtra("CATEGORY_NAME");
         }
         quizRef = FirebaseDatabase.getInstance().getReference().child("quiz").child(categoryName).child("questions");
+        // get quiz questions
         fetchQuiz();
 
-        question = (TextView) findViewById(R.id.question);
-        option1 = (Button) findViewById(R.id.option1);
-        option2 = (Button) findViewById(R.id.option2);
-        option3 = (Button) findViewById(R.id.option3);
-        option4 = (Button) findViewById(R.id.option4);
-        startQuiz = (Button) findViewById(R.id.startQuiz);
-        gotoHome = (Button) findViewById(R.id.gotoHome);
-        loadLayout = (LinearLayout) findViewById(R.id.loadLayout);
-        quizLayout = (LinearLayout) findViewById(R.id.quizLayout);
-        successLayout = (LinearLayout) findViewById(R.id.successLayout);
-        progressBar = (ProgressBar) findViewById(R.id.progress_circular_id);
-        progressBarSuccess = (ProgressBar) findViewById(R.id.progressBar);
-        progressStatus = (TextView) findViewById(R.id.textview_progress_status_id);
-        progressStatusSuccess = (TextView) findViewById(R.id.progressStatus);
-        questionCount = (TextView) findViewById(R.id.questionCount);
-        category = (TextView) findViewById(R.id.category);
+        // get elements by id
+        fetchElementsById();
 
+        // update category name
         category.setText(categoryName);
 
         // load quiz for first time
@@ -120,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
             count++;
         });
 
+        // redirect to home
         gotoHome.setOnClickListener(view -> {
             Intent intent1 = new Intent(QuizActivity.this, HomeActivity.class);
             startActivity(intent1);
@@ -127,16 +111,36 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    public void fetchElementsById() {
+        // fetch all the elements by id
+        question = findViewById(R.id.question);
+        option1 = findViewById(R.id.option1);
+        option2 = findViewById(R.id.option2);
+        option3 = findViewById(R.id.option3);
+        option4 = findViewById(R.id.option4);
+        startQuiz = findViewById(R.id.startQuiz);
+        gotoHome = findViewById(R.id.gotoHome);
+        loadLayout = findViewById(R.id.loadLayout);
+        quizLayout = findViewById(R.id.quizLayout);
+        successLayout = findViewById(R.id.successLayout);
+        progressBar = findViewById(R.id.progress_circular_id);
+        progressBarSuccess = findViewById(R.id.progressBar);
+        progressStatus = findViewById(R.id.textview_progress_status_id);
+        progressStatusSuccess = findViewById(R.id.progressStatus);
+        questionCount = findViewById(R.id.questionCount);
+        category = findViewById(R.id.category);
+    }
+
     private void fetchQuiz() {
         quizRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot quizSnapShot : snapshot.getChildren()) {
+                    // get Quiz and add to quizList
                     Quiz quiz = quizSnapShot.getValue(Quiz.class);
                     quizList.add(quiz);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -145,17 +149,21 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void loadQuestion(int position) {
+        // continue till all the questions are answered
         if (position < 10) {
             Quiz quiz = quizList.get(position);
             if (quiz != null) {
+                // set question and options
                 question.setText(quiz.getQuestion());
                 option1.setText(quiz.getOption1());
                 option2.setText(quiz.getOption2());
                 option3.setText(quiz.getOption3());
                 option4.setText(quiz.getOption4());
+                // set progress
                 progressBar.setProgress(correctAnswer * 10);
                 progressStatus.setText(String.valueOf(correctAnswer));
                 questionCount.setText((position + 1) + "/10");
+                // fetch answer
                 answer = quiz.getAnswer();
             }
         }
@@ -164,6 +172,7 @@ public class QuizActivity extends AppCompatActivity {
     public void selectOption(int choice, int position) {
         Quiz quiz = quizList.get(position);
         String choiceAnswer;
+        // get chosen answer
         switch (choice) {
             case 1:
                 choiceAnswer = quiz.getOption1();
@@ -181,7 +190,9 @@ public class QuizActivity extends AppCompatActivity {
                 choiceAnswer = "";
                 break;
         }
+
         if (position > 9) {
+            // finish the process on last questions
             Intent intent1 = new Intent(QuizActivity.this, HomeActivity.class);
             startActivity(intent1);
             finish();
@@ -196,7 +207,7 @@ public class QuizActivity extends AppCompatActivity {
             progressBarSuccess.setProgress(correctAnswer * 10);
             progressStatusSuccess.setText(String.valueOf(correctAnswer));
 
-            // Save score to shared preference
+            // save score to shared preference
             SharedPreferences sharedPref = getSharedPreferences("scores", Context.MODE_PRIVATE);
             int rewardPoints = sharedPref.getInt("REWARD_POINTS", 0);
             int correct = sharedPref.getInt("CORRECT", 0);
@@ -211,10 +222,10 @@ public class QuizActivity extends AppCompatActivity {
             Leaderboard leaderboard = new Leaderboard(correctAnswer, (10 - correctAnswer),  categoryName);
             boolean inserted = databaseHandler.insertLeaderBoard(leaderboard);
         } else {
+            // increment the count of correct ans if it matches
             if (choiceAnswer.equals(answer)) {
                 correctAnswer++;
             }
         }
     }
-
 }

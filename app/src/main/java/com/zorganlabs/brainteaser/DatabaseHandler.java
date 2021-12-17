@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.zorganlabs.brainteaser.models.Leaderboard;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+    // variables for dbname, table name and columns
     public static final String dbName = "Records.db";
     public static final int version = 1;
     public static final String TABLE_NAME = "LeaderBoard";
@@ -19,6 +20,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String COL3 = "correct";
     public static final String COL4 = "incorrect";
     public static final String COL5 = "createdAt";
+    // create table query string
     private static final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "(" +
             COL1 + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             COL2 + " TEXT NOT NULL," +
@@ -41,6 +43,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // execute drop table and recreate
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        // drop and create table again
         sqLiteDatabase.execSQL(DROP_TABLE);
         onCreate(sqLiteDatabase);
     }

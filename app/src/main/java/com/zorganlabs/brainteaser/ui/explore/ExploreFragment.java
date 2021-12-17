@@ -24,7 +24,6 @@ import com.zorganlabs.brainteaser.models.QuizCategory;
 import java.util.ArrayList;
 
 public class ExploreFragment extends Fragment implements CategoryGridAdapter.CategoryClickListener {
-
     FragmentExploreBinding binding;
     RecyclerView categoryList;
     CategoryGridAdapter categoryGridAdapter;
@@ -39,8 +38,10 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
         View root = binding.getRoot();
         quizRef = FirebaseDatabase.getInstance().getReference().child("quiz");
 
+        // fetch the categories
         fetchCategories();
 
+        // bind categories with adapter
         bindCategoryAdapter();
 
         return root;
@@ -51,10 +52,12 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot quizSnapShot: snapshot.getChildren()) {
-
+                    // get value from QuizCategory class
                     QuizCategory category = quizSnapShot.getValue(QuizCategory.class);
+                    // set title and images
                     categories.add(new QuizCategory(category.getTitle(), category.getImage()));
                 }
+                // notify changes
                 categoryGridAdapter.notifyDataSetChanged();
             }
 
@@ -72,6 +75,7 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
     }
 
     private void bindCategoryAdapter() {
+        // bind data with the adapter
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         categoryList.setLayoutManager(layoutManager);
         categoryGridAdapter = new CategoryGridAdapter(categories, this);
@@ -80,7 +84,9 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
 
     @Override
     public void onCategoryClick(View view, int position) {
+        // move to QuizActivity class on click of category
         Intent intent = new Intent(getContext(), QuizActivity.class);
+        // pass category name to the activity
         intent.putExtra("CATEGORY_NAME", categories.get(position).getTitle());
         startActivity(intent);
     }

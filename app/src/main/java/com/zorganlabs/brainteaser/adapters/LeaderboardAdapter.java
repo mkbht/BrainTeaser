@@ -6,12 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.models.Leaderboard;
-import com.zorganlabs.brainteaser.models.QuizCategory;
 
 import java.util.List;
 
@@ -20,11 +18,12 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     public LeaderboardAdapter(List<Leaderboard> list) {
         super();
+        // set list
         leaderboards = list;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        // member variables
         public TextView category;
         public TextView correct;
         public TextView incorrect;
@@ -33,12 +32,13 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            category = (TextView) itemView.findViewById(R.id.category);
-            correct = (TextView) itemView.findViewById(R.id.correct);
-            incorrect = (TextView) itemView.findViewById(R.id.incorrect);
-            incorrect = (TextView) itemView.findViewById(R.id.incorrect);
-            total = (TextView) itemView.findViewById(R.id.total);
-            ratio = (TextView) itemView.findViewById(R.id.ratio);
+            // fetch elements by id
+            category = itemView.findViewById(R.id.category);
+            correct = itemView.findViewById(R.id.correct);
+            incorrect = itemView.findViewById(R.id.incorrect);
+            incorrect = itemView.findViewById(R.id.incorrect);
+            total = itemView.findViewById(R.id.total);
+            ratio = itemView.findViewById(R.id.ratio);
         }
     }
 
@@ -51,6 +51,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // set values to display
         Leaderboard leaderboard = leaderboards.get(position);
         ((ViewHolder) holder).category.setText(leaderboard.getCategory());
         ((ViewHolder) holder).correct.setText("Correct: " + leaderboard.getCorrect());
@@ -63,6 +64,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemCount() {
+        // get leaderboard's size
         return leaderboards.size();
     }
 }

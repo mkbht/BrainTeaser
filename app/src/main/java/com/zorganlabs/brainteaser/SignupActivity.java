@@ -23,15 +23,23 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import java.util.Objects;
 
 public class SignupActivity extends AppCompatActivity {
-
     private FirebaseAuth mAuth;
     ScrollView registerLayout;
     private boolean error;
+    EditText fullNameInput;
+    EditText emailInput;
+    EditText passwordInput;
+    EditText passwordConfirmInput;
+    TextInputLayout fullNameInputLayout;
+    TextInputLayout emailInputLayout;
+    TextInputLayout passwordInputLayout;
+    TextInputLayout passwordConfirmInputLayout;
+    Button registerButton;
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // check if the user is signed in
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
             mAuth.signOut();
@@ -48,46 +56,63 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // reference ui components
-        EditText fullNameInput = (EditText) findViewById(R.id.fullNameInput);
-        EditText emailInput = (EditText) findViewById(R.id.emailInput);
-        EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
-        EditText passwordConfirmInput = (EditText) findViewById(R.id.passwordConfirmInput);
-        TextInputLayout fullNameInputLayout = (TextInputLayout) findViewById(R.id.fullNameInputLayout);
-        TextInputLayout emailInputLayout = (TextInputLayout) findViewById(R.id.emailInputLayout);
-        TextInputLayout passwordInputLayout = (TextInputLayout) findViewById(R.id.passwordInputLayout);
-        TextInputLayout passwordConfirmInputLayout = (TextInputLayout) findViewById(R.id.passwordConfirmInputLayout);
-        Button registerButton = (Button) findViewById(R.id.registerButton);
-        registerLayout = (ScrollView) findViewById(R.id.registerLayout);
+        fetchElementsById();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 error = false;
-                fullNameInputLayout.setError("");
-                emailInputLayout.setError("");
-                passwordInputLayout.setError("");
-                passwordConfirmInputLayout.setError("");
-
-                if (fullNameInput.getText().toString().trim().equals("")) {
-                    emailInputLayout.setError("Name is required.");
-                    error = true;
-                }
-                if (emailInput.getText().toString().trim().equals("")) {
-                    emailInputLayout.setError("Email is required.");
-                    error = true;
-                }
-                if (passwordInput.getText().toString().trim().equals("")) {
-                    passwordInputLayout.setError("Password is required.");
-                    error = true;
-                } else if (!passwordInput.getText().toString().equals(passwordConfirmInput.getText().toString())) {
-                    passwordConfirmInputLayout.setError("Confirm password do not match.");
-                    error = true;
-                }
-                if (!error) {
-                    register(fullNameInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString());
-                }
+                checkValidations();
             }
         });
+    }
+
+    public void checkValidations() {
+        // remove all the errors
+        fullNameInputLayout.setError("");
+        emailInputLayout.setError("");
+        passwordInputLayout.setError("");
+        passwordConfirmInputLayout.setError("");
+
+        // full name input
+        if (fullNameInput.getText().toString().trim().equals("")) {
+            emailInputLayout.setError("Name is required.");
+            error = true;
+        }
+
+        // email input
+        if (emailInput.getText().toString().trim().equals("")) {
+            emailInputLayout.setError("Email is required.");
+            error = true;
+        }
+
+        // password input
+        if (passwordInput.getText().toString().trim().equals("")) {
+            passwordInputLayout.setError("Password is required.");
+            error = true;
+        } else if (!passwordInput.getText().toString().equals(passwordConfirmInput.getText().toString())) {
+            passwordConfirmInputLayout.setError("Confirm password do not match.");
+            error = true;
+        }
+
+        // if no error is found then register
+        if (!error) {
+            register(fullNameInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString());
+        }
+    }
+
+    public void fetchElementsById() {
+        // fetch elements by id
+        fullNameInput = findViewById(R.id.fullNameInput);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        passwordConfirmInput = findViewById(R.id.passwordConfirmInput);
+        fullNameInputLayout = findViewById(R.id.fullNameInputLayout);
+        emailInputLayout = findViewById(R.id.emailInputLayout);
+        passwordInputLayout = findViewById(R.id.passwordInputLayout);
+        passwordConfirmInputLayout = findViewById(R.id.passwordConfirmInputLayout);
+        registerButton = findViewById(R.id.registerButton);
+        registerLayout = findViewById(R.id.registerLayout);
     }
 
     private void register(String fullName, String email, String password) {
@@ -96,12 +121,15 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            // update the profile
                             updateProfile(fullName);
+                            // display toast
                             Toast.makeText(SignupActivity.this, "Login Successful.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
+                            // display errors
                             Snackbar.make(registerLayout, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()), Snackbar.LENGTH_SHORT)
                                     .setBackgroundTint(getResources().getColor(R.color.error))
                                     .show();
@@ -115,13 +143,12 @@ public class SignupActivity extends AppCompatActivity {
                 .setDisplayName(fullName)
                 .build();
 
+        // update current profile
         mAuth.getCurrentUser().updateProfile(profileUpdates)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
                     }
                 });
-
     }
 }

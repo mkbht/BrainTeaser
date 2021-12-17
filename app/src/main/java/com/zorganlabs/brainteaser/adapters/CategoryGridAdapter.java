@@ -1,12 +1,6 @@
 package com.zorganlabs.brainteaser.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,24 +15,22 @@ import com.bumptech.glide.Glide;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.models.QuizCategory;
 
-import java.net.URL;
 import java.util.List;
-import java.util.Random;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<QuizCategory> categories;
     private CategoryClickListener categoryClickListener;
     Context context;
-    public ImageView imageView;
 
     public CategoryGridAdapter(List<QuizCategory> list, CategoryClickListener listener) {
         super();
+        // set list
         categories = list;
         categoryClickListener = listener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+        // member variables
         public TextView title;
         public CardView parentCardView;
         CategoryClickListener categoryClickListener;
@@ -46,6 +38,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ViewHolder(@NonNull View itemView, CategoryClickListener categoryClickListener) {
             super(itemView);
+            // fetch elements by id
             title = itemView.findViewById(R.id.title);
             parentCardView = itemView.findViewById(R.id.parentCardView);
             imageView = itemView.findViewById(R.id.image);
@@ -55,6 +48,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
+            // get position on click of category
             categoryClickListener.onCategoryClick(view, getAdapterPosition());
         }
     }
@@ -69,8 +63,11 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        // fetch category position
         QuizCategory quizCategory = categories.get(position);
+        // set title to the view
         ((ViewHolder) holder).title.setText(quizCategory.getTitle());
+        // set image to the view
         Glide.with(((ViewHolder) holder).imageView.getContext())
                 .load(quizCategory.getImage())
                 .into(((ViewHolder) holder).imageView);
@@ -78,10 +75,12 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
+        // get categories size
         return categories.size();
     }
 
     public interface CategoryClickListener {
+        // attach click listener
         void onCategoryClick(View view, int position);
     }
 }

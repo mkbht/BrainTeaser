@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,26 +20,32 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
-
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     Boolean error;
     ScrollView loginLayout;
-    public ProgressDialog loginprogress;
+    public ProgressDialog loginProgress;
+    EditText emailInput;
+    TextInputLayout emailInputLayout;
+    EditText passwordInput;
+    TextView resetPassword;
+    TextInputLayout passwordInputLayout;
+    Button loginButton;
+    Button registerButton;
+    ProgressDialog loadingBar;
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // check if user is signed in and update UI accordingly
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        // if user exists move to login page
         if (currentUser != null) {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
@@ -55,17 +60,12 @@ public class LoginActivity extends AppCompatActivity {
         // hide action bar
         getSupportActionBar().hide();
 
+        // get instance of firebase auth
         mAuth = FirebaseAuth.getInstance();
 
-        EditText emailInput = (EditText) findViewById(R.id.emailInput);
-        TextInputLayout emailInputLayout = (TextInputLayout) findViewById(R.id.emailInputLayout);
-        EditText passwordInput = (EditText) findViewById(R.id.passwordInput);
-        TextView resetPassword = (TextView) findViewById(R.id.resetPassword);
-        TextInputLayout passwordInputLayout = (TextInputLayout) findViewById(R.id.passwordInputLayout);
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        Button registerButton = (Button) findViewById(R.id.registerButton);
-        loginLayout = (ScrollView) findViewById(R.id.loginLayout);
-        loginprogress=new ProgressDialog(this);
+        // fetch elements by id
+        this.fetchElementsById();
+        loginProgress =new ProgressDialog(this);
 
         // login button click handler
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -98,20 +98,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // reset button click handler
         resetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resetPasswordDialog();
             }
         });
-
     }
-    ProgressDialog loadingBar;
-    /**
-     * Sign in
-     * @param email Email address
-     * @param password password
-     */
+
+    private void fetchElementsById() {
+        // fetch elements by id
+        emailInput = findViewById(R.id.emailInput);
+        emailInputLayout = findViewById(R.id.emailInputLayout);
+        passwordInput = findViewById(R.id.passwordInput);
+        resetPassword = findViewById(R.id.resetPassword);
+        passwordInputLayout = findViewById(R.id.passwordInputLayout);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
+        loginLayout = findViewById(R.id.loginLayout);
+    }
+
     private void signIn(String email, String password)  {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -132,38 +139,52 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void resetPasswordDialog() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        // set alert
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter email to reset password");
-        LinearLayout linearLayout=new LinearLayout(this);
-        final EditText emailet= new EditText(this);
 
-        // write the email using which you registered
-//        emailet.setText("Email");
-        emailet.setMinEms(16);
-        emailet.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        linearLayout.addView(emailet);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        // set margin
+        lp.setMargins(40, 40, 40, 40);
+
+        // add linear layout dynamically
+        LinearLayout linearLayout = new LinearLayout(this);
+        // add edit text to the layout
+        final EditText emailEt = new EditText(this);
+        emailEt.setLayoutParams(lp);
+
+        // input the email by which the user registered
+        emailEt.setMinEms(16);
+        emailEt.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        // add edit text to the layout
+        linearLayout.addView(emailEt);
+        // set padding
         linearLayout.setPadding(10,10,10,10);
         builder.setView(linearLayout);
+        // listener when user chooses to reset the password
         builder.setPositiveButton("Reset Password", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String email=emailet.getText().toString().trim();
+                // fetch email from edit text view
+                String email = emailEt.getText().toString().trim();
                 beginRecovery(email);
             }
         });
 
+        // when user cancels to reset
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
+        // show builder
         builder.create().show();
     }
 
-
     private void beginRecovery(String email) {
-        loadingBar=new ProgressDialog(this);
+        // show progress bar
+        loadingBar = new ProgressDialog(this);
         loadingBar.setMessage("Sending Email....");
         loadingBar.setCanceledOnTouchOutside(false);
         loadingBar.show();
@@ -188,26 +209,9 @@ public class LoginActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                // display in case of failure
                 loadingBar.dismiss();
                 Toast.makeText(LoginActivity.this,"Error Failed",Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }
-    public void loginUser(String email,String password){
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    loginprogress.dismiss();
-                    Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(mainIntent);
-                    finish();
-                } else {
-                    loginprogress.hide();
-                    Toast.makeText(LoginActivity.this,"Cannot Sign In..Plaese Try Again",Toast.LENGTH_LONG);
-                }
             }
         });
     }

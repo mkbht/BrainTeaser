@@ -1,17 +1,21 @@
 package com.zorganlabs.brainteaser.models;
 
 public class QuizCategory {
+    // member variables
     private String title, image;
 
+    // constructor
     public QuizCategory() {
 
     }
 
+    // parameterized constructor
     public QuizCategory(String title, String image) {
         this.title = title;
         this.image = image;
     }
 
+    // getters and setters
     public String getTitle() {
         return title;
     }

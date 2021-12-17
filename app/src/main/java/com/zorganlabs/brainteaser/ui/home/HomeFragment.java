@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,9 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.zorganlabs.brainteaser.LoginActivity;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.databinding.FragmentHomeBinding;
-import com.zorganlabs.brainteaser.ui.explore.ExploreFragment;
-
-import org.w3c.dom.Text;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
@@ -39,10 +35,13 @@ public class HomeFragment extends Fragment {
         final TextView rankValue = binding.rankValue;
 
         mAuth = FirebaseAuth.getInstance();
+        // fetch current user
         currentUser = mAuth.getCurrentUser();
+        // add display name if user is not null
         if (currentUser != null) {
             homePageUserName.setText(currentUser.getDisplayName());
         } else {
+            // display Visitor when no user is found
             homePageUserName.setText("Visitor!");
         }
 
@@ -54,22 +53,30 @@ public class HomeFragment extends Fragment {
         int correct = sharedPref.getInt("CORRECT", 0) == 0 ? 1 : sharedPref.getInt("CORRECT", 0);
         int mistakes = sharedPref.getInt("MISTAKES", 0) == 0 ? 1 : sharedPref.getInt("MISTAKES", 0);
 
+        // calculate ratio
         String ratio = String.format("%.2f",
                 (double) correct / mistakes);
         txtRewardPoints.setText(String.valueOf(rewardPoints));
+        // set ratio
         rankValue.setText(ratio);
 
+        // submit click listener
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // navigate
                 Navigation.findNavController(root).navigate(R.id.navigation_explore);
             }
         });
 
+        // get logout button
         final Button logoutButton = binding.logOut;
 
+        // logout click listener
         logoutButton.setOnClickListener(view -> {
+            // sign out the user
             mAuth.signOut();
+            // move to login page
             Intent intent = new Intent(getContext(), LoginActivity.class);
             startActivity(intent);
             getActivity().finish();
