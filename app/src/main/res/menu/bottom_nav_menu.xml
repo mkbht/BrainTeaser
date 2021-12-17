@@ -12,8 +12,8 @@
         android:title="@string/explore" />
 
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="@string/profile" />
+        android:id="@+id/navigation_leaderboard"
+        android:icon="@drawable/ic_baseline_leaderboard_24"
+        android:title="@string/leaderboard" />
 
 </menu>

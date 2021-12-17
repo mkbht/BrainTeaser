@@ -26,4 +26,5 @@
     <string name="profileIcon">TODO</string>
     <string name="next_level">Next Level</string>
     <string name="rank">C/I Rank</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zorganlabs.brainteaser.models.Leaderboard;
 import com.zorganlabs.brainteaser.models.Quiz;
 import com.zorganlabs.brainteaser.models.QuizCategory;
 
@@ -49,7 +50,8 @@ public class QuizActivity extends AppCompatActivity {
     int correctAnswer = 0;
     String answer;
     LinearLayout successLayout;
-     Button gotoHome;
+    Button gotoHome;
+    DatabaseHandler databaseHandler;
 
 
     @Override
@@ -57,6 +59,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         getSupportActionBar().hide();
+
+        databaseHandler = new DatabaseHandler(this);
 
         // grab category name
         Intent intent = getIntent();
@@ -185,6 +189,7 @@ public class QuizActivity extends AppCompatActivity {
             if (choiceAnswer.equals(answer)) {
                 correctAnswer++;
             }
+            // hide questions and show success view
             loadLayout.setVisibility(View.GONE);
             quizLayout.setVisibility(View.GONE);
             successLayout.setVisibility(View.VISIBLE);
@@ -201,6 +206,10 @@ public class QuizActivity extends AppCompatActivity {
             editor.putInt("CORRECT", correctAnswer + correct);
             editor.putInt("MISTAKES", (10 - correctAnswer) + mistakes);
             editor.commit();
+
+            // save score to leaderboard
+            Leaderboard leaderboard = new Leaderboard(correctAnswer, (10 - correctAnswer),  categoryName);
+            boolean inserted = databaseHandler.insertLeaderBoard(leaderboard);
         } else {
             if (choiceAnswer.equals(answer)) {
                 correctAnswer++;
