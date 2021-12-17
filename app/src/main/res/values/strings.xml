@@ -22,4 +22,5 @@
     <string name="start_quiz">Start quiz</string>
     <string name="user_name">User Name</string>
     <string name="reward_points_value">3500</string>
+    <string name="profileIcon">TODO</string>
 </resources>
