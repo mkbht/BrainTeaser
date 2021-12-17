@@ -82,6 +82,7 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
     @Override
     public void onCategoryClick(View view, int position) {
         Intent intent = new Intent(getContext(), QuizActivity.class);
+        intent.putExtra("CATEGORY_NAME", categories.get(position).getTitle());
         startActivity(intent);
     }
 }

@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,11 +22,101 @@
             app:cardCornerRadius="20dp">
 
             <LinearLayout
+                android:id="@+id/loadLayout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingVertical="32dp">
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:text="Category"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:text="Total Questions: 10"
+                    android:layout_marginVertical="16dp"
+                    android:textAlignment="center"/>
+                <Button
+                    android:id="@+id/startQuiz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Quiz" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/successLayout"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:visibility="gone"
+                android:paddingVertical="32dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingVertical="16dp"
+                    android:text="Congratulations" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingVertical="16dp">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circle_shape"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="30"
+                        android:progressDrawable="@drawable/circular_progress_bar" />
+
+                    <TextView
+                        android:id="@+id/progressStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="3"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+                <Button
+                    android:id="@+id/gotoHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Go to home" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/quizLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="32dp">
+                android:paddingVertical="32dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -37,13 +128,15 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_weight="1"
-                        android:text="6/10" />
+                        android:visibility="invisible"
+                        android:text="1/10" />
 
                     <TextView
+                        android:id="@+id/questionCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:text="6/10" />
+                        android:text="1/10" />
 
                 </LinearLayout>
 
@@ -63,7 +156,7 @@
                         android:indeterminate="false"
                         android:max="100"
                         android:progress="30"
-                        android:progressDrawable="@drawable/circular_progress_bar"></ProgressBar>
+                        android:progressDrawable="@drawable/circular_progress_bar" />
 
                     <TextView
                         android:id="@+id/textview_progress_status_id"
@@ -73,16 +166,17 @@
                         android:text="3"
                         android:textColor="@color/primaryColor"
                         android:textSize="16dp"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingVertical="32dp"
                     android:text="Is this the question?"
                     android:textAlignment="center"
                     android:textSize="24dp"
-                    android:paddingVertical="32dp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
@@ -90,9 +184,9 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/register"
                     app:cornerRadius="20dp"
-                    android:layout_marginVertical="8dp"
                     app:strokeColor="@color/secondaryColor" />
 
                 <com.google.android.material.button.MaterialButton
@@ -100,9 +194,9 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/register"
                     app:cornerRadius="20dp"
-                    android:layout_marginVertical="8dp"
                     app:strokeColor="@color/secondaryColor" />
 
                 <com.google.android.material.button.MaterialButton
@@ -110,9 +204,9 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/register"
                     app:cornerRadius="20dp"
-                    android:layout_marginVertical="8dp"
                     app:strokeColor="@color/secondaryColor" />
 
                 <com.google.android.material.button.MaterialButton
@@ -120,9 +214,9 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    android:layout_marginVertical="8dp"
                     android:text="@string/register"
                     app:cornerRadius="20dp"
-                    android:layout_marginVertical="8dp"
                     app:strokeColor="@color/secondaryColor" />
             </LinearLayout>
 
