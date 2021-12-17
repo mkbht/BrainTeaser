@@ -23,4 +23,6 @@
     <string name="user_name">User Name</string>
     <string name="reward_points_value">3500</string>
     <string name="profileIcon">TODO</string>
+    <string name="next_level">Next Level</string>
+    <string name="rank">Rank</string>
 </resources>
