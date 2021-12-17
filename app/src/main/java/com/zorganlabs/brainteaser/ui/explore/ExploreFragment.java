@@ -1,5 +1,6 @@
 package com.zorganlabs.brainteaser.ui.explore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,13 +18,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.zorganlabs.brainteaser.QuizActivity;
 import com.zorganlabs.brainteaser.adapters.CategoryGridAdapter;
 import com.zorganlabs.brainteaser.databinding.FragmentExploreBinding;
 import com.zorganlabs.brainteaser.models.QuizCategory;
 
 import java.util.ArrayList;
 
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment implements CategoryGridAdapter.CategoryClickListener {
 
 
     FragmentExploreBinding binding;
@@ -75,7 +77,13 @@ public class ExploreFragment extends Fragment {
     private void bindCategoryAdapter() {
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         categoryList.setLayoutManager(layoutManager);
-        categoryGridAdapter = new CategoryGridAdapter(categories, getContext());
+        categoryGridAdapter = new CategoryGridAdapter(categories, this);
         categoryList.setAdapter(categoryGridAdapter);
+    }
+
+    @Override
+    public void onCategoryClick(View view, int position) {
+        Intent intent = new Intent(getContext(), QuizActivity.class);
+        startActivity(intent);
     }
 }

@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BrainTeaser">
         <activity
+            android:name=".QuizActivity"
+            android:exported="true" />
+        <activity
             android:name=".SignupActivity"
             android:exported="true"
-            android:parentActivityName="com.zorganlabs.brainteaser.LoginActivity"/>
+            android:parentActivityName=".LoginActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -28,8 +31,7 @@
             android:label="@string/title_activity_home" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

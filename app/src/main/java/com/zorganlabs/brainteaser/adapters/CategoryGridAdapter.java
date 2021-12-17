@@ -19,21 +19,31 @@ import java.util.Random;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<QuizCategory> categories;
+    private CategoryClickListener categoryClickListener;
 
-    public CategoryGridAdapter(List<QuizCategory> list, Context context) {
+    public CategoryGridAdapter(List<QuizCategory> list, CategoryClickListener listener) {
         super();
         categories = list;
+        categoryClickListener = listener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView title;
         public CardView parentCardView;
+        CategoryClickListener categoryClickListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, CategoryClickListener categoryClickListener) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
             parentCardView = (CardView) itemView.findViewById(R.id.parentCardView);
+            this.categoryClickListener = categoryClickListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            categoryClickListener.onCategoryClick(view, getAdapterPosition());
         }
     }
 
@@ -41,7 +51,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_card, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, categoryClickListener);
     }
 
     @Override
@@ -53,5 +63,9 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return categories.size();
+    }
+
+    public interface CategoryClickListener {
+        void onCategoryClick(View view, int position);
     }
 }
