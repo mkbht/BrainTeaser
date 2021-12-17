@@ -9,14 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.databinding.FragmentHomeBinding;
-import com.zorganlabs.brainteaser.ui.explore.ExploreFragment;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
@@ -43,12 +41,7 @@ public class HomeFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new ExploreFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // fragmentTransaction.replace(R.id.fragment_container, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                Navigation.findNavController(root).navigate(R.id.navigation_explore);
             }
         });
         return root;
