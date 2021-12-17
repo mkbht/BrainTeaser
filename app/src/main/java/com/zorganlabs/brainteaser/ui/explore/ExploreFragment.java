@@ -54,7 +54,7 @@ public class ExploreFragment extends Fragment implements CategoryGridAdapter.Cat
                 for (DataSnapshot quizSnapShot: snapshot.getChildren()) {
 
                     QuizCategory category = quizSnapShot.getValue(QuizCategory.class);
-                    categories.add(new QuizCategory(category.getTitle()));
+                    categories.add(new QuizCategory(category.getTitle(), category.getImage()));
                 }
                 categoryGridAdapter.notifyDataSetChanged();
             }

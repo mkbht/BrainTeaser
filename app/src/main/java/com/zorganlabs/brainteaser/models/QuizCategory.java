@@ -1,14 +1,15 @@
 package com.zorganlabs.brainteaser.models;
 
 public class QuizCategory {
-    private String title;
+    private String title, image;
 
     public QuizCategory() {
 
     }
 
-    public QuizCategory(String title) {
+    public QuizCategory(String title, String image) {
         this.title = title;
+        this.image = image;
     }
 
     public String getTitle() {
@@ -17,5 +18,13 @@ public class QuizCategory {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

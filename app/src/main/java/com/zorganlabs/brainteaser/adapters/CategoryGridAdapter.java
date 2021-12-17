@@ -1,7 +1,12 @@
 package com.zorganlabs.brainteaser.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.models.QuizCategory;
 
+import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<QuizCategory> categories;
     private CategoryClickListener categoryClickListener;
+    Context context;
 
     public CategoryGridAdapter(List<QuizCategory> list, CategoryClickListener listener) {
         super();
@@ -51,6 +58,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_card, parent, false);
+        context = parent.getContext();
         return new ViewHolder(v, categoryClickListener);
     }
 
