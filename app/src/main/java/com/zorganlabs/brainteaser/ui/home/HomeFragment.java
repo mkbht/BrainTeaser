@@ -1,5 +1,6 @@
 package com.zorganlabs.brainteaser.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.zorganlabs.brainteaser.LoginActivity;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.databinding.FragmentHomeBinding;
 import com.zorganlabs.brainteaser.ui.explore.ExploreFragment;
@@ -48,7 +49,17 @@ public class HomeFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                Navigation.findNavController(root).navigate(R.id.navigation_explore);
             }
+        });
+
+        final Button logoutButton = binding.logOut;
+
+        logoutButton.setOnClickListener(view -> {
+            mAuth.signOut();
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
         return root;
     }
