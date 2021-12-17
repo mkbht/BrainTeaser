@@ -1,144 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#3F51B5"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.494" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/homePageUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:layout_marginBottom="25dp"
-        android:text="@string/user_name"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/homePageUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:text="@string/user_name"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
 
-    <TextView
-        android:id="@+id/homePageUSerGreeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:text="@string/hi"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/homePageUserName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="224dp"
+            android:layout_height="199dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/homePageUserName"
+            android:src="@drawable/rhythmic_gymnastics"
+            android:layout_centerHorizontal="true"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="48dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/player_badge"
-        android:src="@drawable/medal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        tools:ignore="ImageContrastCheck" />
+        <TableLayout
+            android:id="@+id/overviewTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:layout_marginTop="50dp"
+            android:layout_below="@id/profileImage"
+            >
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:divider="#FFFFFF"
+                android:showDividers="middle"
+                >
 
-    <TextView
-        android:id="@+id/rewarPointsString"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/reward_points"
-        android:textColor="#FDFDFD"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/rewardValueHome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                <LinearLayout
+                    android:id="@+id/second_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    >
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:layout_marginBottom="104dp"
-        android:text="@string/start_quiz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rewardValueHome" />
+                    <ImageView
+                        android:id="@+id/rankImage"
+                        android:layout_width="48dp"
+                        android:layout_height="38dp"
+                        android:contentDescription="@string/player_badge"
+                        android:src="@drawable/podium"
+                        tools:ignore="ImageContrastCheck"
+                        />
 
-    <TextView
-        android:id="@+id/rewardValueHome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:text="@string/reward_points_value"
-        android:textColor="#FFC107"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rewarPointsString" />
+                    <TextView
+                        android:id="@+id/rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rank"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:layout_below="@+id/rankImage" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="224dp"
-        android:layout_height="199dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="32dp"
-        android:src="@drawable/rhythmic_gymnastics"
-        app:layout_constraintBottom_toTopOf="@+id/text_home"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePageUserName"
-        android:contentDescription="@string/profileIcon" />
+                    <TextView
+                        android:id="@+id/rankValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_below="@+id/rank" />
+                </LinearLayout>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePageUserName"
-        tools:ignore="SpeakableTextPresentCheck" />
+                <LinearLayout
+                    android:id="@+id/first_text"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar3"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="268dp"
-        android:layout_height="265dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginBottom="34dp"
-        android:clickable="false"
-        app:layout_constraintBottom_toTopOf="@+id/rewarPointsString"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePageUserName"
-        app:layout_constraintVertical_bias="0.0" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="48dp"
+                        android:layout_height="38dp"
+                        android:contentDescription="@string/player_badge"
+                        android:src="@drawable/medal"
+                        tools:ignore="ImageContrastCheck"
+                        />
+
+                    <TextView
+                        android:id="@+id/rewardPointsString"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reward_points"
+                        android:textSize="16sp"
+                        android:textColor="#FFFFFF"
+                        android:layout_below="@+id/imageView" />
+
+                    <TextView
+                        android:id="@+id/rewardValueHome"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/reward_points_value"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_below="@+id/rewardPointsString" />
+
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/startQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:layout_marginBottom="104dp"
+            android:text="@string/start_quiz"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/overviewTable"/>
+    </RelativeLayout>
+</ScrollView>
