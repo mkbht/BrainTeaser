@@ -167,7 +167,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // fetch email from edit text view
                 String email = emailEt.getText().toString().trim();
-                beginRecovery(email);
+                if(email.equals("")) {
+                    Snackbar.make(loginLayout, "Email address is required", Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(getResources().getColor(R.color.error))
+                            .show();
+                } else {
+                    beginRecovery(email);
+                }
             }
         });
 
