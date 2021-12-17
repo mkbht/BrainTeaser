@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.databinding.FragmentHomeBinding;
-import com.zorganlabs.brainteaser.ui.dashboard.ExploreFragment;
+import com.zorganlabs.brainteaser.ui.explore.ExploreFragment;
 
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
