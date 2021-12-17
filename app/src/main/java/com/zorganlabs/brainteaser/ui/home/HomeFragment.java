@@ -1,6 +1,8 @@
 package com.zorganlabs.brainteaser.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,8 @@ import com.zorganlabs.brainteaser.R;
 import com.zorganlabs.brainteaser.databinding.FragmentHomeBinding;
 import com.zorganlabs.brainteaser.ui.explore.ExploreFragment;
 
+import org.w3c.dom.Text;
+
 public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     FirebaseAuth mAuth;
@@ -31,6 +35,8 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         final TextView homePageUserName = binding.homePageUserName;
+        final TextView txtRewardPoints = binding.rewardValueHome;
+        final TextView rankValue = binding.rankValue;
 
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -41,6 +47,17 @@ public class HomeFragment extends Fragment {
         }
 
         Button submit = root.findViewById(R.id.startQuiz);
+
+        // fetch reward points
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("scores", Context.MODE_PRIVATE);
+        int rewardPoints = sharedPref.getInt("REWARD_POINTS", 0);
+        int correct = sharedPref.getInt("CORRECT", 0) == 0 ? 1 : sharedPref.getInt("CORRECT", 0);
+        int mistakes = sharedPref.getInt("MISTAKES", 0) == 0 ? 1 : sharedPref.getInt("MISTAKES", 0);
+
+        String ratio = String.format("%.2f",
+                (double) correct / mistakes);
+        txtRewardPoints.setText(String.valueOf(rewardPoints));
+        rankValue.setText(ratio);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

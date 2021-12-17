@@ -3,7 +3,9 @@ package com.zorganlabs.brainteaser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -188,6 +190,17 @@ public class QuizActivity extends AppCompatActivity {
             successLayout.setVisibility(View.VISIBLE);
             progressBarSuccess.setProgress(correctAnswer * 10);
             progressStatusSuccess.setText(String.valueOf(correctAnswer));
+
+            // Save score to shared preference
+            SharedPreferences sharedPref = getSharedPreferences("scores", Context.MODE_PRIVATE);
+            int rewardPoints = sharedPref.getInt("REWARD_POINTS", 0);
+            int correct = sharedPref.getInt("CORRECT", 0);
+            int mistakes = sharedPref.getInt("MISTAKES", 0);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt("REWARD_POINTS", correctAnswer * 100 - (10 - correctAnswer) * 10 + rewardPoints);
+            editor.putInt("CORRECT", correctAnswer + correct);
+            editor.putInt("MISTAKES", (10 - correctAnswer) + mistakes);
+            editor.commit();
         } else {
             if (choiceAnswer.equals(answer)) {
                 correctAnswer++;
