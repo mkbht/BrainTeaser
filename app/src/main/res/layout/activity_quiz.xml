@@ -70,7 +70,7 @@
                     android:textSize="20sp"
                     android:textAlignment="center"
                     android:paddingVertical="16dp"
-                    android:text="Congratulations" />
+                    android:text="Congratulations!" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
